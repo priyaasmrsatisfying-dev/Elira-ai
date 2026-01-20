@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #FAF7F2; /* Soft Cream */
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B4E45;
+}
+
+/* MAIN CONTAINER */
+.elira-app {
+  width: 92%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 18px 50px rgba(107, 78, 69, 0.12);
+}
+
+/* HEADER */
+.elira-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.elira-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #9a8f8b;
+  margin-bottom: 20px;
+}
+
+/* CHAT AREA */
+.chat-area {
+  background: #FAF7F2;
+  border-radius: 18px;
+  padding: 16px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* ELIRA MESSAGE */
+.message.elira {
+  align-self: flex-start;
+  background: #EECAD5;
+  color: #3f2b25;
+  padding: 12px 16px;
+  border-radius: 16px 16px 16px 4px;
+  font-size: 14px;
+  max-width: 85%;
+  line-height: 1.5;
+}
+
+/* USER MESSAGE */
+.message.user {
+  align-self: flex-end;
+  background: #C9C3E6;
+  color: #2d2a38;
+  padding: 12px 16px;
+  border-radius: 16px 16px 4px 16px;
+  font-size: 14px;
+  max-width: 85%;
+  line-height: 1.5;
+}
+
+/* INPUT */
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #e1dcd9;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+}
+
+.input-area input::placeholder {
+  color: #b6aaa6;
+}
+
+/* SEND BUTTON */
+.input-area button {
+  background: #6B4E45;
+  color: #fff;
+  border: none;
+  padding: 0 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.input-area button:hover {
+  background: #5a3f38;
+}
+
+/* NIGHT MODE READY */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0F0F14;
+    color: #e8e6f0;
+  }
+
+  .elira-app {
+    background: #16161d;
+  }
+
+  .chat-area {
+    background: #1f1f28;
+  }
+}
