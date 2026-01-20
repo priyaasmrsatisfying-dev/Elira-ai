@@ -1,0 +1,81 @@
+const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("userInput");
+const chatArea = document.getElementById("chatArea");
+
+sendBtn.addEventListener("click", sendMessage);
+input.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") sendMessage();
+});
+
+function sendMessage() {
+  const userText = input.value.trim();
+  if (userText === "") return;
+
+  // USER MESSAGE
+  const userMsg = document.createElement("div");
+  userMsg.className = "message user";
+  userMsg.innerText = userText;
+  chatArea.appendChild(userMsg);
+
+  input.value = "";
+  chatArea.scrollTop = chatArea.scrollHeight;
+
+  // Calm pause before Elira replies
+  setTimeout(() => {
+    const eliraMsg = document.createElement("div");
+    eliraMsg.className = "message elira";
+    eliraMsg.innerText = getEliraReply(userText);
+    chatArea.appendChild(eliraMsg);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }, 900);
+}
+
+/* 🌍 LANGUAGE + EMOTION AWARE ELIRA */
+function getEliraReply(text) {
+  const lower = text.toLowerCase();
+
+  // --- LANGUAGE DETECTION (basic demo) ---
+  const isHindi = /hai|nahi|kyu|kya|thik|haan|dukhi|akela/.test(lower);
+  const isMarathi = /ahe|kaay|nahi|bara|dukhi/.test(lower);
+  const isUrdu = /hai|nahi|kyun|akela|udaas/.test(lower);
+
+  // --- EMOTIONAL STATES ---
+  const sadWords = ["sad", "tired", "alone", "cry", "hurt", "dukhi", "udaas", "akela"];
+  const angryWords = ["angry", "frustrated", "fed up", "gussa", "pareshan"];
+  const happyWords = ["happy", "good", "excited", "khush", "accha"];
+
+  if (sadWords.some(word => lower.includes(word))) {
+    if (isHindi || isUrdu)
+      return "Yeh thoda bhaari lag raha hai… main yahin hoon. Jaldi karne ki zarurat nahi 🤍";
+    if (isMarathi)
+      return "He thoda jड वाटतंय… mi ikडे aahe. Ghaya nako 🤍";
+    return "That sounds heavy… I’m here with you. You don’t have to rush 🤍";
+  }
+
+  if (angryWords.some(word => lower.includes(word))) {
+    if (isHindi || isUrdu)
+      return "Aisa mehsoos hona theek hai. Chaaho toh bol sakti ho, main sun rahi hoon.";
+    if (isMarathi)
+      return "Asa वाटणं theek aahe. Mi aiktey.";
+    return "It’s okay to feel this way. I’m listening.";
+  }
+
+  if (happyWords.some(word => lower.includes(word))) {
+    if (isHindi || isUrdu)
+      return "Yeh sunke accha laga 😊";
+    if (isMarathi)
+      return "He aikun chhaan वाटलं 😊";
+    return "That’s nice to hear 😊";
+  }
+
+  // --- DEFAULT CALM RESPONSES ---
+  const softReplies = [
+    "I’m here. Take your time 🌙",
+    "You don’t have to explain everything.",
+    "We can talk… or just sit quietly.",
+    "You’re safe here.",
+    "I’m listening 🤍"
+  ];
+
+  return softReplies[Math.floor(Math.random() * softReplies.length)];
+}
