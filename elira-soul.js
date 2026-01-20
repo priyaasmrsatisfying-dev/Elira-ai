@@ -23,3 +23,14 @@ export function shapeResponse(reply, mood, time) {
 
   return finalReply;
 }
+
+import { detectMood } from "./elira-mind.js";
+import { shapeResponse } from "./elira-soul.js";
+
+const mood = detectMood(userMessage);
+const hour = new Date().getHours();
+
+let reply = data.choices[0].message.content;
+reply = shapeResponse(reply, mood, hour);
+
+res.json({ reply });
