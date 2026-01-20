@@ -1,4 +1,11 @@
-const sendBtn = document.getElementById("sendBtn");
+function detectLanguage(text) {
+  if (/[\u0900-\u097F]/.test(text)) return "hi"; // Hindi
+  if (/[\u0C80-\u0CFF]/.test(text)) return "kn"; // Kannada
+  if (/[\u0C00-\u0C7F]/.test(text)) return "te"; // Telugu
+  if (/[\u0D00-\u0D7F]/.test(text)) return "ml"; // Malayalam
+  if (/[\u0600-\u06FF]/.test(text)) return "ur"; // Urdu
+  return "en";
+}const sendBtn = document.getElementById("sendBtn");
 const input = document.getElementById("userInput");
 const chatArea = document.getElementById("chatArea");
 
@@ -77,5 +84,47 @@ function getEliraReply(text) {
     "I’m listening 🤍"
   ];
 
-  return softReplies[Math.floor(Math.random() * softReplies.length)];
+  return softReplies[Math.floor(Math.random() * softReplies.length)];const eliraReplies = {
+  en: [
+    "I’m here. Take your time 🤍",
+    "That sounds heavy… do you want to talk about it?",
+    "You don’t have to explain everything. I’m listening.",
+    "We can sit quietly too, if you want."
+  ],
+  hi: [
+    "मैं यहीं हूँ… आराम से बताओ 🤍",
+    "यह थोड़ा भारी लग रहा है… चाहो तो बात करें?",
+    "सब कुछ समझाना ज़रूरी नहीं है, मैं सुन रही हूँ।",
+    "अगर चाहो तो बस चुपचाप भी बैठ सकते हैं।"
+  ],
+  ur: [
+    "میں یہیں ہوں… آہستہ آہستہ بتاؤ 🤍",
+    "یہ مشکل لگ رہا ہے… بات کرنا چاہو گے؟",
+    "سب کچھ کہنا ضروری نہیں، میں سن رہی ہوں۔"
+  ]
+};
+}function showTyping() {
+  const typing = document.createElement("div");
+  typing.className = "typing";
+  typing.id = "typing";
+  typing.innerHTML = "Elira is typing<span>.</span><span>.</span><span>.</span>";
+  chatBox.appendChild(typing);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTyping() {
+  const typing = document.getElementById("typing");
+  if (typing) typing.remove();
+}function replyElira(userText) {
+  const lang = detectLanguage(userText);
+  const replies = eliraReplies[lang] || eliraReplies.en;
+
+  showTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    const reply =
+      replies[Math.floor(Math.random() * replies.length)];
+    addMessage(reply, "elira");
+  }, 1200);
 }
